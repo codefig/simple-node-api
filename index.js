@@ -5,6 +5,7 @@ const auth = require('./routes/auth')
 const userRouter = require('./routes/users');
 const config = require('config')
 
+const moviesRouter = require('./routes/movies')
 const app = express();
 
 if(!config.get('jwtPrivateKey')){
@@ -26,6 +27,7 @@ app.use(bodyparser.urlencoded({extended : true}))
 
 app.use("/api/users", userRouter);
 app.use('/api/auth', auth);
+app.use('/api/movies', moviesRouter);
 
 app.get("/", function(req, res){
     return res.send("Welcome to the Users page");
