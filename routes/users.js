@@ -2,7 +2,7 @@ const {User, validateUser} = require('../models/user');
 const express = require('express');
 const router = express.Router();
 const _ = require('lodash');
-
+const bcrypt = require('bcrypt')
 
 
 router.post('/', async function(req, res){
@@ -34,6 +34,9 @@ router.post('/', async function(req, res){
         email : req.body.email, 
         password : req.body.password,
     })
+
+    let salt = await bcrypt.genSalt(5)
+    result.password = await bcrypt.hash(result.password, salt);
 
     await result.save();
     console.log("User account created")

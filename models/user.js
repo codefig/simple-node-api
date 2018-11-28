@@ -3,12 +3,6 @@ const router = express.Router();
 const mongoose = require('mongoose');
 const Joi = require('joi');
 
-mongoose.connect("mongodb://localhost:27017/playground")
-.then(function(){
-    console.log("Connected to database")
-}).catch(err => {
-    console.log("Error : " + err);
-})
 
 const userSchema = new mongoose.Schema({
     name : {
