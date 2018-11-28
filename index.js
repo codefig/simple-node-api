@@ -3,8 +3,14 @@ const mongoose = require('mongoose');
 const bodyparser = require('body-parser')
 const auth = require('./routes/auth')
 const userRouter = require('./routes/users');
+const config = require('config')
 
 const app = express();
+
+if(!config.get('jwtPrivateKey')){
+    console.log("FATAL ERROR !jwtPrivatekey not defined")
+    process.exit(1);
+}
 
 mongoose.connect("mongodb://localhost:27017/playground")
 .then(function(){
