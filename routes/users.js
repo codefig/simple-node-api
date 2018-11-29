@@ -5,27 +5,20 @@ const _ = require('lodash');
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const config = require('config')
+const authMiddleware = require('../middlewares/auth')
 
-
+router.get('/me', authMiddleware, async function(req, res){
+    console.log(req.user._id);
+    // res.send("welcome");
+    const user = await User.findById(req.user._id).select('-password');
+    return res.send(user);
+})
 router.post('/', async function(req, res){
     // console.log(req.body);
     const {error} = validateUser(req.body);
     if(error) {
         return res.status(404).send(error.details[0].message);
     }
-
-    // User.findOne({email: req.body.email}, function(err,result){
-    //     if(err) {
-    //         console.log(err);
-    //         res.status(404).send(err);
-    //     }
-
-    //     else if(result){
-    //         console.log("User already exist");
-    //         res.status(404).send("Username already exist");
-    //     }
-
-    // })
 
     let user = await User.findOne({email: req.body.email});
     if(user) return res.status(400).send("User record already exist");
