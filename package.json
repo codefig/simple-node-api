@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "",
+  "author": "Moshood Alaran",
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^3.0.2",

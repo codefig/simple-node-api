@@ -6,6 +6,12 @@ const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const config = require('config')
 const authMiddleware = require('../middlewares/auth')
+const adminMiddleware = require('../middlewares/admin');
+
+router.get('/admin', [authMiddleware, adminMiddleware],function(req, res, next){
+    console.log(req.user._id);
+    res.send("Welcome to the admin section");
+})
 
 router.get('/me', authMiddleware, async function(req, res){
     console.log(req.user._id);
