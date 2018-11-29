@@ -25,11 +25,14 @@ const userSchema = new mongoose.Schema({
         required : true, 
         minlength: 5, 
         maxlength: 1024
+    }, 
+    isAdmin : {
+        type : Boolean, 
     }
 })
 
 userSchema.methods.getAuthToken = function(){
-    const token = jwt.sign({_id : this._id}, config.get('jwtPrivateKey'));
+    const token = jwt.sign({_id : this._id,isAdmin : this.isAdmin}, config.get('jwtPrivateKey'));
     return token;
 }
 
@@ -48,21 +51,3 @@ function validateUser(user){
 
 exports.User = User;
 exports.validateUser = validateUser;
-
-// async function createUser(){
-//     const user = new User({
-//         name : "Makinde Abbass", 
-//         email : "geekyshood@gmail.com",
-//         password : "water", 
-//     })
-
-//     try {
-//         await user.save()
-//         console.log("user created");
-//     }
-//     catch(err){
-//         console.log(err.errors);
-//     }
-// }
-
-// createUser();
